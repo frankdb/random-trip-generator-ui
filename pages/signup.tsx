@@ -4,14 +4,14 @@ import ContainerLayout from "../components/layout/ContentLayout";
 import Signup from "../components/forms/Signup";
 import Link from "next/link";
 
-interface ISignupFormData {
+interface SignupFormData {
   name: string;
   email: string;
   password: string;
 }
 
 const signup = () => {
-  const [formData, setFormData] = useState<ISignupFormData>({
+  const [formData, setFormData] = useState<SignupFormData>({
     name: "",
     email: "",
     password: "",

@@ -35,18 +35,13 @@ const Signup = ({ formData, handleFormData, handleSubmit }) => {
             onChange={(e) => handleFormData(e)}
           />
         </label>
-        {/* <button
-          className="w-full p-4 mt-4 mb-4 font-bold text-white bg-blue-500 rounded-md"
-          type="submit"
-        >
-          Submit
-        </button> */}
         <Button
           type="submit"
           text="Submit"
           handleClick={() => {}}
-          fullWidth="true"
+          isFullWidth={true}
           color="bg-blue-500"
+          isLoading={false}
         />
       </form>
     </div>
