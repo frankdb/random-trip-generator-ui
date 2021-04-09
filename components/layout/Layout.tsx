@@ -1,5 +1,4 @@
 import React from "react";
-import Hero from "../marketing/Hero";
 import Navbar from "../navbar/Navbar";
 
 const Layout = ({ children }) => {

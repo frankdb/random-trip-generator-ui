@@ -14,9 +14,9 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 w-100">
-      <div className="container flex flex-row justify-between px-4 py-6 mx-auto font-bold text-purple-400">
+      <div className="container flex flex-row justify-between max-w-6xl px-4 py-6 mx-auto font-bold text-purple-400">
         <div>
-          <div>
+          <div className="px-3">
             <Link href="/">Home</Link>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../layout/Button";
 
 const Signup = ({ formData, handleFormData, handleSubmit }) => {
   return (
@@ -34,12 +35,19 @@ const Signup = ({ formData, handleFormData, handleSubmit }) => {
             onChange={(e) => handleFormData(e)}
           />
         </label>
-        <button
+        {/* <button
           className="w-full p-4 mt-4 mb-4 font-bold text-white bg-blue-500 rounded-md"
           type="submit"
         >
           Submit
-        </button>
+        </button> */}
+        <Button
+          type="submit"
+          text="Submit"
+          handleClick={() => {}}
+          fullWidth="true"
+          color="bg-blue-500"
+        />
       </form>
     </div>
   );

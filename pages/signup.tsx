@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Layout from "../components/layouts/Layout";
-import ContainerLayout from "../components/layouts/ContentLayout";
+import Layout from "../components/layout/Layout";
+import ContainerLayout from "../components/layout/ContentLayout";
 import Signup from "../components/forms/Signup";
 import Link from "next/link";
 
