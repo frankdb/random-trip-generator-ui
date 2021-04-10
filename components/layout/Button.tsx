@@ -1,5 +1,5 @@
 import React, { MouseEventHandler } from "react";
-import { IconContext } from "react-icons";
+import { IconBaseProps, IconContext } from "react-icons";
 import { VscLoading } from "react-icons/vsc";
 
 interface ButtonProps {
@@ -10,6 +10,12 @@ interface ButtonProps {
   isFullWidth?: boolean;
   isDisabled?: boolean;
   isLoading?: boolean;
+  paddingX?: number;
+  paddingY?: number;
+  marginX?: number | string;
+  marginY?: number | string;
+  fontSize?: "xs" | "sm" | "base" | "lg";
+  icon?: IconBaseProps;
 }
 
 const Button = ({
@@ -20,15 +26,23 @@ const Button = ({
   color = "bg-blue-500",
   isDisabled = false,
   isLoading = false,
+  paddingX = 4,
+  paddingY = 2,
+  marginX = 0,
+  marginY = 4,
+  fontSize = "base",
+  icon = null,
 }: ButtonProps) => {
-  const width = isFullWidth === true ? "w-full" : "";
+  const fullWidth = isFullWidth ? "w-full" : "";
+
   return (
     <button
       type={type}
       onClick={handleClick}
-      className={`${width} px-4 py-2 font-bold text-white ${color} mt-4 mb-4 border border-transparent rounded-md shadow-sm hover:opacity-95 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 inline-flex justify-center`}
+      className={`${fullWidth} px-${paddingX} py-${paddingY} text-${fontSize} font-bold text-white ${color} mx-${marginX} my-${marginY} border border-transparent rounded-md shadow-sm hover:opacity-95 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 inline-flex justify-center items-center`}
       disabled={isDisabled || isLoading}
     >
+      {icon ? <span className="mr-2">{icon}</span> : null}
       {isLoading ? (
         <IconContext.Provider value={{ size: "1.25em" }}>
           <span className="mr-2 animate-spin">

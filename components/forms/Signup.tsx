@@ -37,11 +37,10 @@ const Signup = ({ formData, handleFormData, handleSubmit }) => {
         </label>
         <Button
           type="submit"
-          text="Submit"
+          text="Sign Up"
           handleClick={() => {}}
           isFullWidth={true}
           color="bg-blue-500"
-          isLoading={false}
         />
       </form>
     </div>
