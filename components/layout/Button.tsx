@@ -3,9 +3,9 @@ import { IconBaseProps, IconContext } from "react-icons";
 import { VscLoading } from "react-icons/vsc";
 
 interface ButtonProps {
-  type: "button" | "submit" | "reset";
   text: string;
-  handleClick: MouseEventHandler<any>;
+  type?: "button" | "submit" | "reset";
+  handleClick?: MouseEventHandler<any>;
   color?: string;
   isFullWidth?: boolean;
   isDisabled?: boolean;
@@ -19,9 +19,9 @@ interface ButtonProps {
 }
 
 const Button = ({
-  type,
   text,
-  handleClick,
+  type = "button",
+  handleClick = () => {},
   isFullWidth = false,
   color = "bg-blue-500",
   isDisabled = false,
@@ -39,7 +39,7 @@ const Button = ({
     <button
       type={type}
       onClick={handleClick}
-      className={`${fullWidth} px-${paddingX} py-${paddingY} text-${fontSize} font-bold text-white ${color} mx-${marginX} my-${marginY} border border-transparent rounded-md shadow-sm hover:opacity-95 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 inline-flex justify-center items-center`}
+      className={`${fullWidth} px-${paddingX} py-${paddingY} text-${fontSize} font-bold text-white ${color} mx-${marginX} my-${marginY} border border-transparent rounded-md shadow-sm hover:opacity-95 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 inline-flex justify-center items-center focus:outline-none focus:ring-2 focus:border-blue-300`}
       disabled={isDisabled || isLoading}
     >
       {icon ? <span className="mr-2">{icon}</span> : null}

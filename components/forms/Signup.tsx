@@ -42,6 +42,9 @@ const Signup = ({ formData, handleFormData, handleSubmit }) => {
           isFullWidth={true}
           color="bg-blue-500"
         />
+        <button className="px-2 py-2 font-bold bg-white border-2 border-green-500 rounded-md shadow-sm font-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 hover:bg-green-300">
+          Outline
+        </button>
       </form>
     </div>
   );

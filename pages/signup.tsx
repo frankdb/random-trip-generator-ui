@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import ContainerLayout from "../components/layout/ContentLayout";
 import Signup from "../components/forms/Signup";
 import Link from "next/link";
+import { useAuth } from "../hooks/use-auth";
 
 interface SignupFormData {
   name: string;
@@ -11,6 +12,12 @@ interface SignupFormData {
 }
 
 const signup = () => {
+  const auth = useAuth();
+
+  useEffect(() => {
+    console.log("Auth===", auth);
+  }, []);
+
   const [formData, setFormData] = useState<SignupFormData>({
     name: "",
     email: "",
