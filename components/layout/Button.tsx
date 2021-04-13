@@ -3,10 +3,10 @@ import { IconBaseProps, IconContext } from "react-icons";
 import { VscLoading } from "react-icons/vsc";
 
 interface ButtonProps {
-  text: string;
+  label: string;
   type?: "button" | "submit" | "reset";
   handleClick?: MouseEventHandler<any>;
-  color?: string;
+  colorScheme?: string;
   isFullWidth?: boolean;
   isDisabled?: boolean;
   isLoading?: boolean;
@@ -16,14 +16,15 @@ interface ButtonProps {
   marginY?: number | string;
   fontSize?: "xs" | "sm" | "base" | "lg";
   icon?: IconBaseProps;
+  variant?: "primary" | "secondary";
 }
 
 const Button = ({
-  text,
+  label,
   type = "button",
   handleClick = () => {},
   isFullWidth = false,
-  color = "bg-blue-500",
+  colorScheme = "blue",
   isDisabled = false,
   isLoading = false,
   paddingX = 4,
@@ -32,14 +33,26 @@ const Button = ({
   marginY = 4,
   fontSize = "base",
   icon = null,
+  variant = "primary",
 }: ButtonProps) => {
   const fullWidth = isFullWidth ? "w-full" : "";
+
+  const baseClasses = `px-${paddingX} py-${paddingY} text-${fontSize} mx-${marginX} my-${marginY} inline-flex justify-center items-center rounded-md shadow-sm transition duration-300 ease-in-out font-bold focus:outline-none focus:ring-2 ${fullWidth} `;
+
+  const primaryButtonClasses = `text-white border border-transparent bg-${colorScheme}-500 hover:bg-${colorScheme}-600 disabled:cursor-not-allowed disabled:opacity-60 focus:border-${colorScheme}-300`;
+
+  const secondaryButtonClasses = `text-${colorScheme}-600 bg-white border-2 border-${colorScheme}-500 focus:ring-${colorScheme}-400 focus:ring-opacity-50 hover:bg-${colorScheme}-300`;
+
+  const variantClasses =
+    variant === "primary" ? primaryButtonClasses : secondaryButtonClasses;
+
+  const finalClasses = baseClasses + variantClasses;
 
   return (
     <button
       type={type}
       onClick={handleClick}
-      className={`${fullWidth} px-${paddingX} py-${paddingY} text-${fontSize} font-bold text-white ${color} mx-${marginX} my-${marginY} border border-transparent rounded-md shadow-sm hover:opacity-95 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 inline-flex justify-center items-center focus:outline-none focus:ring-2 focus:border-blue-300`}
+      className={finalClasses}
       disabled={isDisabled || isLoading}
     >
       {icon ? <span className="mr-2">{icon}</span> : null}
@@ -50,7 +63,7 @@ const Button = ({
           </span>
         </IconContext.Provider>
       ) : null}
-      {text}
+      {label}
     </button>
   );
 };

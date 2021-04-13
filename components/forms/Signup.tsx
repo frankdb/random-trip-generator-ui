@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "../layout/Button";
 
 const Signup = ({ formData, handleFormData, handleSubmit }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="flex flex-col max-w-md p-8 mx-auto bg-white rounded-md shadow-sm">
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -37,14 +39,19 @@ const Signup = ({ formData, handleFormData, handleSubmit }) => {
         </label>
         <Button
           type="submit"
-          text="Sign Up"
-          handleClick={() => {}}
+          label="Sign Up"
+          handleClick={() => {
+            setIsLoading(true);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 2000);
+          }}
           isFullWidth={true}
-          color="bg-blue-500"
+          colorScheme="blue"
+          isLoading={isLoading}
         />
-        <button className="px-2 py-2 font-bold bg-white border-2 border-green-500 rounded-md shadow-sm font-gray-600 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 hover:bg-green-300">
-          Outline
-        </button>
+        <Button label="Cancel" marginX={2} paddingX={4} variant="secondary" />
+        <Button label="Save" marginX={2} paddingX={8} />
       </form>
     </div>
   );
