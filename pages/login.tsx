@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/layout/Layout";
 import ContainerLayout from "../components/layout/ContentLayout";
-import Signup from "../components/forms/Signup";
+import Login from "../components/forms/Login";
 import Link from "next/link";
 import { useAuth } from "../hooks/use-auth";
 import { useRouter } from "next/router";
 
-interface SignupFormData {
-  name: string;
+interface LoginFormData {
   email: string;
   password: string;
 }
@@ -20,13 +19,12 @@ const signup = () => {
     console.log("Auth===", auth);
   }, [auth]);
 
-  const [formData, setFormData] = useState<SignupFormData>({
-    name: "",
+  const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
 
-  const { name, email, password } = formData;
+  const { email, password } = formData;
 
   const handleFormData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,7 +33,7 @@ const signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("formData", formData);
-    const res = await auth.signup(name, email, password);
+    const res = await auth.signin(email, password);
     console.log("RES======", res);
     if (res) {
       router.push("/onboarding");
@@ -46,15 +44,15 @@ const signup = () => {
     <Layout>
       <ContainerLayout>
         <div className="p-4 text-center">
-          <h2 className="text-2xl font-bold">Sign up</h2>
+          <h2 className="text-2xl font-bold">Login</h2>
           <p>
-            Already have an account?{" "}
+            Don't have an account?{" "}
             <span className="pointer">
-              <Link href="/login">Log in</Link>
+              <Link href="/signup">Sign Up</Link>
             </span>
           </p>
         </div>
-        <Signup
+        <Login
           formData={formData}
           handleFormData={handleFormData}
           handleSubmit={handleSubmit}

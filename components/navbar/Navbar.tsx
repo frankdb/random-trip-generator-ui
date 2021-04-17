@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiMenu } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import Dropdown from "./Dropdown";
+import { useAuth } from "../../hooks/use-auth";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [showDropdown, setShowDropdown] = useState<boolean>(false);
+  const auth = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (auth.user.token) {
+      setIsLoggedIn(true);
+    }
+  }, [auth]);
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
     console.log("showDropdown value:", showDropdown);
+  };
+
+  const handleSignout = () => {
+    auth.signout();
+    router.push("/signup");
   };
 
   return (
@@ -20,17 +36,28 @@ const Navbar = () => {
             <Link href="/">Home</Link>
           </div>
         </div>
-        <div className="flex-row hidden sm:flex">
-          <div className="px-3 cursor-pointer">
-            <Link href="/randomtripgenerator">Random Trip Generator</Link>
+        {isLoggedIn ? (
+          <div className="flex-row hidden sm:flex">
+            <div className="px-3 cursor-pointer">
+              <Link href="/randomtripgenerator">Random Trip Generator</Link>
+            </div>
+            <div className="px-3 cursor-pointer">
+              <span onClick={() => handleSignout()}>Sign Out</span>
+            </div>
           </div>
-          <div className="px-3 cursor-pointer">
-            <Link href="/login">Log In</Link>
+        ) : (
+          <div className="flex-row hidden sm:flex">
+            <div className="px-3 cursor-pointer">
+              <Link href="/randomtripgenerator">Random Trip Generator</Link>
+            </div>
+            <div className="px-3 cursor-pointer">
+              <Link href="/login">Log In</Link>
+            </div>
+            <div className="px-3 cursor-pointer">
+              <Link href="/signup">Sign Up</Link>
+            </div>
           </div>
-          <div className="px-3 cursor-pointer">
-            <Link href="/signup">Sign Up</Link>
-          </div>
-        </div>
+        )}
         <div
           className="flex sm:hidden pointer"
           onClick={() => toggleDropdown()}
