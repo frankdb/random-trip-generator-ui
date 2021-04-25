@@ -5,7 +5,7 @@ import Button from "../components/layout/Button";
 import ContentLayout from "../components/layout/ContentLayout";
 import Layout from "../components/layout/Layout";
 import FlowController from "../components/onboarding/FlowController";
-import { useAuth } from "../hooks/use-auth";
+import { useRequireAuth } from "../hooks/use-require-auth";
 import { getUser } from "../services/user";
 
 const steps = {
@@ -34,7 +34,7 @@ const steps = {
 };
 
 const onboarding = () => {
-  const auth = useAuth();
+  const auth = useRequireAuth();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -46,9 +46,9 @@ const onboarding = () => {
     // }
     console.log("getting in here?=====A");
 
-    getUser().then((res) => {
-      console.log("MAYBE====", res);
-    });
+    // getUser().then((res) => {
+    //   console.log("MAYBE====", res);
+    // });
   }, [user]);
 
   const [onboardingData, setOnboardingData] = useState({

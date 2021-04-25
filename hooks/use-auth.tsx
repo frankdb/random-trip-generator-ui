@@ -3,14 +3,12 @@ import axios from "axios";
 import setAuthToken from "../utilities/setAuthToken";
 
 const authContext = createContext(null);
-// Provider component that wraps your app and makes auth object ...
-// ... available to any child component that calls useAuth().
+
 export function AuthProvider({ children }) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
 }
-// Hook for child components to get the auth object ...
-// ... and re-render when it changes.
+
 export const useAuth = () => {
   return useContext(authContext);
 };
@@ -19,12 +17,10 @@ function useProvideAuth() {
   const [user, setUser] = useState({
     isLoading: true,
     token: null,
+    isAuthenticated: false,
   });
-  // Wrap any Firebase methods we want to use making sure ...
-  // ... to save the user to state.
-  const signup = (name, email, password) => {
-    console.log("IN HOOK===", name, email, password);
 
+  const signup = (name, email, password) => {
     return axios
       .post("http://localhost:3000/api/user/signup", {
         name,
@@ -33,7 +29,9 @@ function useProvideAuth() {
       })
       .then((res) => {
         console.log(res);
-        setUser({ ...user, isLoading: false, token: res.data.token });
+        const token = res.data.token;
+        setUser({ ...user, isLoading: false, token, isAuthenticated: true });
+        localStorage.setItem("token", token);
         return res;
       })
       .catch((err) => {
@@ -41,7 +39,8 @@ function useProvideAuth() {
         return null;
       });
   };
-  const signin = (email, password) => {
+
+  const login = (email, password) => {
     return axios
       .post("http://localhost:3000/api/user/login", {
         email,
@@ -49,7 +48,9 @@ function useProvideAuth() {
       })
       .then((res) => {
         console.log(res);
-        setUser({ ...user, isLoading: false, token: res.data.token });
+        const token = res.data.token;
+        setUser({ ...user, isLoading: false, token, isAuthenticated: false });
+        localStorage.setItem("token", token);
         return res;
       })
       .catch((err) => {
@@ -58,6 +59,7 @@ function useProvideAuth() {
       });
   };
   const signout = () => {
+    localStorage.removeItem("token");
     setUser({ ...user, isLoading: false, token: null });
     return "Signed out";
     // return firebase
@@ -90,9 +92,16 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    if (user.token) {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      setUser({ ...user, isLoading: false, token, isAuthenticated: true });
       setAuthToken(user.token);
     }
+
+    // if (user.token) {
+    //   setAuthToken(user.token);
+    // }
     // const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
     //   if (user) {
     //     setUser(user);
@@ -102,11 +111,10 @@ function useProvideAuth() {
     // });
     // // Cleanup subscription on unmount
     // return () => unsubscribe();
-  }, [user]);
-  // Return the user object and auth methods
+  }, []);
   return {
     user,
-    signin,
+    login,
     signup,
     signout,
     sendPasswordResetEmail,

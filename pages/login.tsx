@@ -33,7 +33,7 @@ const signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("formData", formData);
-    const res = await auth.signin(email, password);
+    const res = await auth.login(email, password);
     console.log("RES======", res);
     if (res) {
       router.push("/onboarding");

@@ -9,7 +9,8 @@ export default function Home() {
         backgroundColor="bg-gray-800"
         header="Life's a trip."
         subheader="Track where you've been and where you're heading next"
-        fontColor="text-red-400"
+        fontColor="text-blue-400"
+        showCTAButton={true}
       />
     </Layout>
   );

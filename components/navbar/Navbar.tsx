@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <nav className="bg-gray-800 w-100">
-      <div className="container flex flex-row justify-between max-w-6xl px-4 py-6 mx-auto font-bold text-red-400">
+      <div className="container flex flex-row justify-between max-w-6xl px-4 py-6 mx-auto font-bold text-blue-400">
         <div>
           <div className="px-3">
             <Link href="/">Home</Link>
@@ -66,7 +66,12 @@ const Navbar = () => {
             <FiMenu />
           </IconContext.Provider>
         </div>
-        {!showDropdown ? null : <Dropdown />}
+        {!showDropdown ? null : (
+          <Dropdown
+            isLoggedIn={isLoggedIn}
+            handleSignout={() => handleSignout()}
+          />
+        )}
       </div>
     </nav>
   );
