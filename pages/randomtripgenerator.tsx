@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Layout from "../components/layout/Layout";
+import Layout from "../components/application-ui/layout/Layout";
 import { IconContext } from "react-icons";
 import { FaGlobeAmericas } from "react-icons/fa";
 

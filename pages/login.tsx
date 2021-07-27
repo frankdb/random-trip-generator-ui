@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Layout from "../components/layout/Layout";
-import ContainerLayout from "../components/layout/ContentLayout";
+import Layout from "../components/application-ui/layout/Layout";
+import ContainerLayout from "../components/application-ui/layout/ContentLayout";
 import Login from "../components/forms/Login";
 import Link from "next/link";
 import { useAuth } from "../hooks/use-auth";

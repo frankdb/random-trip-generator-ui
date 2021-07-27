@@ -1,9 +1,9 @@
 import axios from "axios";
 import next from "next";
 import React, { useEffect, useState } from "react";
-import Button from "../components/layout/Button";
-import ContentLayout from "../components/layout/ContentLayout";
-import Layout from "../components/layout/Layout";
+import Button from "../components/application-ui/elements/Button";
+import ContentLayout from "../components/application-ui/layout/ContentLayout";
+import Layout from "../components/application-ui/layout/Layout";
 import FlowController from "../components/onboarding/FlowController";
 import { useRequireAuth } from "../hooks/use-require-auth";
 import { getUser } from "../services/user";

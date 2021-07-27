@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
-import Button from "../layout/Button";
+import Button from "../application-ui/elements/Button";
 
 interface HeroProps {
   backgroundColor: string;

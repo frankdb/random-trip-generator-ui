@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FiMenu } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import Dropdown from "./Dropdown";
-import { useAuth } from "../../hooks/use-auth";
+import { useAuth } from "../../../../hooks/use-auth";
 import { useRouter } from "next/router";
 
 const Navbar = () => {
@@ -54,7 +54,7 @@ const Navbar = () => {
               <Link href="/login">Log In</Link>
             </div>
             <div className="px-3 cursor-pointer">
-              <Link href="/signup">Sign Up</Link>
+              <Link href="/signupalt">Sign Up</Link>
             </div>
           </div>
         )}
