@@ -16,7 +16,8 @@ interface ButtonProps {
   marginY?: number | string;
   fontSize?: "xs" | "sm" | "base" | "lg";
   icon?: IconBaseProps;
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
+  float?: "none" | "left" | "right";
 }
 
 const Button = ({
@@ -34,19 +35,26 @@ const Button = ({
   fontSize = "base",
   icon = null,
   variant = "primary",
+  float = "none",
 }: ButtonProps) => {
   const fullWidth = isFullWidth ? "w-full" : "";
 
-  const baseClasses = `px-${paddingX} py-${paddingY} text-${fontSize} mx-${marginX} my-${marginY} inline-flex justify-center items-center rounded-md shadow-sm transition duration-300 ease-in-out font-bold focus:outline-none focus:ring-2 ${fullWidth} `;
+  const baseClasses = `px-${paddingX} py-${paddingY} text-${fontSize} mx-${marginX} my-${marginY} inline-flex justify-center items-center rounded-md transition duration-300 ease-in-out font-bold focus:outline-none ${fullWidth} float-${float}`;
 
-  const primaryButtonClasses = `text-white border border-transparent bg-${colorScheme}-500 hover:bg-${colorScheme}-600 disabled:cursor-not-allowed disabled:opacity-60 focus:border-${colorScheme}-300`;
+  const primaryButtonClasses = `shadow-sm text-white border border-transparent bg-${colorScheme}-500 hover:bg-${colorScheme}-600 disabled:cursor-not-allowed disabled:opacity-60 focus:border-${colorScheme}-300 focus:ring-2`;
 
-  const secondaryButtonClasses = `text-${colorScheme}-600 bg-white border-2 border-${colorScheme}-500 focus:ring-${colorScheme}-400 focus:ring-opacity-50 hover:bg-${colorScheme}-300`;
+  const secondaryButtonClasses = `shadow-sm text-${colorScheme}-600 bg-white border-2 border-${colorScheme}-500 focus:ring-${colorScheme}-400 focus:ring-opacity-50 hover:bg-${colorScheme}-300 focus:ring-2`;
+
+  const tertiaryButtonClasses = `text-${colorScheme}-600 hover:text-${colorScheme}-800`;
 
   const variantClasses =
-    variant === "primary" ? primaryButtonClasses : secondaryButtonClasses;
+    variant === "primary"
+      ? primaryButtonClasses
+      : variant === "secondary"
+      ? secondaryButtonClasses
+      : tertiaryButtonClasses;
 
-  const finalClasses = baseClasses + variantClasses;
+  const finalClasses = baseClasses + " " + variantClasses;
 
   return (
     <button

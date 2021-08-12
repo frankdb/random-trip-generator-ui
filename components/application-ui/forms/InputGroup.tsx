@@ -10,8 +10,9 @@ interface InputGroupProps {
   onChange?: any;
   onBlur?: any;
   placeholder?: string;
-  throwError?: boolean;
-  errorMessage?: string;
+  throwError?: any;
+  errorMessage?: any;
+  isTextArea?: boolean;
 }
 
 const InputGroup = ({
@@ -25,6 +26,7 @@ const InputGroup = ({
   onBlur,
   throwError,
   errorMessage = "Required",
+  isTextArea = false,
 }: InputGroupProps) => {
   const classes = throwError
     ? "border-red-300 focus:ring-red-500 focus:border-red-500 text-red-900 placeholder-red-300 border-red-300 pr-10"
@@ -38,18 +40,33 @@ const InputGroup = ({
         </label>
       ) : null}
       <div className="relative mt-1 rounded-md shadow-sm">
-        <input
-          type={type}
-          name={name}
-          id={id}
-          className={`block w-full rounded-md focus:outline-none ${classes}`}
-          placeholder={placeholder}
-          aria-invalid={throwError}
-          aria-describedby={`${name}-error`}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-        />
+        {isTextArea ? (
+          <textarea
+            name={name}
+            id={id}
+            className={`block w-full rounded-md focus:outline-none ${classes}`}
+            placeholder={placeholder}
+            aria-invalid={throwError}
+            aria-describedby={`${name}-error`}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        ) : (
+          <input
+            type={type}
+            name={name}
+            id={id}
+            className={`block w-full rounded-md focus:outline-none ${classes}`}
+            placeholder={placeholder}
+            aria-invalid={throwError}
+            aria-describedby={`${name}-error`}
+            value={value}
+            onChange={onChange}
+            onBlur={onBlur}
+          />
+        )}
+
         {throwError ? (
           <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
             <ExclamationCircleIcon

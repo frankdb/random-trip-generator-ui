@@ -1,9 +1,11 @@
+import { Formik } from "formik";
+import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import Button from "../components/application-ui/elements/Button";
-import ContentLayout from "../components/application-ui/layout/ContentLayout";
 import Layout from "../components/application-ui/layout/Layout";
-import FlowController from "../components/onboarding/FlowController";
+import ContentLayout from "../components/application-ui/layout/ContentLayout";
+import InputGroup from "../components/application-ui/forms/InputGroup";
+import Button from "../components/application-ui/elements/Button";
 import { useRequireAuth } from "../hooks/use-require-auth";
 import { getUser, getUsers } from "../services/user";
 
@@ -20,8 +22,6 @@ const steps = {
       { text: "outside the us", value: 2 },
     ],
   },
-  // if in usa - places visited
-  // if outside usa - bucket list
   placesVisited: {
     question: "Where have you been?",
     type: "textInput",
@@ -47,47 +47,87 @@ const onboarding = () => {
     previousStep: "",
   });
 
-  const setNextStep = () => {
-    if (onboardingData.currentStep === "name") {
-      setOnboardingData({
-        ...onboardingData,
-        currentStep: "location",
-        previousStep: "name",
-      });
+  const handleFormSubmit = async ({ name, email, password }) => {
+    try {
+      // const res = await auth.signup(name, email, password);
+      // if (res) {
+      //   router.push("/onboarding");
+      // }
+    } catch (err) {
+      console.log(err);
     }
-  };
-
-  const setPreviousStep = () => {
-    setOnboardingData({
-      ...onboardingData,
-      currentStep: onboardingData.previousStep,
-    });
-  };
-
-  const next = () => {
-    console.log("clicking");
-    setOnboardingData({ ...onboardingData, currentStep: "placesVisited" });
   };
 
   return (
     <Layout>
       <ContentLayout>
-        <div className="bg-green-100">
-          <FlowController step={steps[onboardingData.currentStep]} />
-          <div className="flex flex-row justify-between w-full">
-            <Button
-              label="Back"
-              marginX={2}
-              variant="secondary"
-              handleClick={() => setPreviousStep()}
-            />
-            <Button
-              label="Next"
-              marginX={2}
-              handleClick={() => setNextStep()}
-            />
-          </div>
-        </div>
+        <Formik
+          initialValues={{ name: "", email: "", password: "" }}
+          onSubmit={handleFormSubmit}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isSubmitting,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <InputGroup
+                label="Where do you live?"
+                name="name"
+                id="name"
+                placeholder="New York, NY"
+                value={values.name}
+                onChange={handleChange}
+                throwError={errors.name && touched.name}
+                errorMessage={errors.name}
+              />
+              <InputGroup
+                label="Where have you been?"
+                name="email"
+                id="email"
+                placeholder="Seattle, Buenos Aires, Madrid"
+                value={values.email}
+                onChange={handleChange}
+                throwError={errors.email && touched.email}
+                errorMessage={errors.email}
+                isTextArea={true}
+              />
+              <InputGroup
+                label="Where do you want to go next?"
+                name="password"
+                id="password"
+                placeholder="Paris, Tokyo, Mumbai"
+                value={values.password}
+                onChange={handleChange}
+                throwError={errors.password && touched.password}
+                errorMessage={errors.password}
+                isTextArea={true}
+              />
+              <Button
+                type="submit"
+                label="Save"
+                colorScheme="blue"
+                float="right"
+                paddingX={12}
+                isLoading={isSubmitting}
+              />
+              <Button
+                type="submit"
+                label="Skip"
+                marginX={4}
+                variant="tertiary"
+                colorScheme="blue"
+                float="right"
+                paddingX={8}
+                isLoading={isSubmitting}
+              />
+            </form>
+          )}
+        </Formik>
       </ContentLayout>
     </Layout>
   );
