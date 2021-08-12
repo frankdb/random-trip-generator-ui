@@ -22,11 +22,15 @@ function useProvideAuth() {
 
   const signup = (name, email, password) => {
     return axios
-      .post("http://localhost:3000/api/user/signup", {
-        name,
-        email,
-        password,
-      })
+      .post(
+        "http://localhost:3000/api/user/signup",
+        {
+          name,
+          email,
+          password,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
         console.log(res);
         const token = res.data.token;
