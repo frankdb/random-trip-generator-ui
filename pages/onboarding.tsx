@@ -1,12 +1,11 @@
-import axios from "axios";
-import next from "next";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import Button from "../components/application-ui/elements/Button";
 import ContentLayout from "../components/application-ui/layout/ContentLayout";
 import Layout from "../components/application-ui/layout/Layout";
 import FlowController from "../components/onboarding/FlowController";
 import { useRequireAuth } from "../hooks/use-require-auth";
-import { getUser } from "../services/user";
+import { getUser, getUsers } from "../services/user";
 
 const steps = {
   name: {
@@ -36,20 +35,12 @@ const steps = {
 const onboarding = () => {
   const auth = useRequireAuth();
   const [user, setUser] = useState(null);
+  const [users, setUsers] = useState(null);
+  const { data, isError, isLoading } = useQuery("users", getUsers);
 
   useEffect(() => {
-    // async function getUser() {
-    //   const res = await axios.get("http://localhost:3000/api/user/");
-    //   console.log("HULLO====", res);
-    //   setUser(res);
-    //   return res;
-    // }
-    console.log("getting in here?=====A");
-
-    // getUser().then((res) => {
-    //   console.log("MAYBE====", res);
-    // });
-  }, [user]);
+    console.log("USERS=====", data, isError, isLoading);
+  }, [data]);
 
   const [onboardingData, setOnboardingData] = useState({
     currentStep: "name",
