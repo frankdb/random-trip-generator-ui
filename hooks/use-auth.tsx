@@ -105,6 +105,16 @@ function useProvideAuth() {
       setAuthToken(user.token);
     }
 
+    // let token;
+
+    // if (typeof window !== "undefined") {
+    //   token = localStorage.getItem("token");
+    // }
+
+    // if (token) {
+    //   setAuthToken(user.token);
+    // }
+
     // if (user.token) {
     //   setAuthToken(user.token);
     // }

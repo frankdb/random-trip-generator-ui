@@ -1,5 +1,4 @@
 import { Formik } from "formik";
-import * as Yup from "yup";
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Layout from "../components/application-ui/layout/Layout";
@@ -7,7 +6,7 @@ import ContentLayout from "../components/application-ui/layout/ContentLayout";
 import InputGroup from "../components/application-ui/forms/InputGroup";
 import Button from "../components/application-ui/elements/Button";
 import { useRequireAuth } from "../hooks/use-require-auth";
-import { getProfile, getUsers } from "../services/user";
+import { getProfile, getUsers, updateProfile } from "../services/user";
 
 const steps = {
   name: {
@@ -42,18 +41,36 @@ const onboarding = () => {
     getProfile()
       .then((res) => {
         profile = res;
+        console.log("PROFILE====", profile);
       })
       .catch((err) => {
         console.error(err);
       });
   }, [data]);
 
-  const handleFormSubmit = async ({ location, email, password }) => {
+  const handleFormSubmit = async ({
+    bio,
+    location,
+    places_visited,
+    bucket_list,
+  }) => {
     try {
       // const res = await auth.signup(name, email, password);
       // if (res) {
       //   router.push("/onboarding");
       // }
+      console.log(bio, location, places_visited, bucket_list);
+
+      const obj = {
+        profile: {
+          bio,
+          location,
+          places_visited,
+          bucket_list,
+        },
+      };
+
+      updateProfile(obj);
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +81,12 @@ const onboarding = () => {
       <ContentLayout>
         <div className="w-3/4 mx-auto">
           <Formik
-            initialValues={{ location: "", email: "", password: "" }}
+            initialValues={{
+              bio: "",
+              location: "",
+              places_visited: "",
+              bucket_list: "",
+            }}
             onSubmit={handleFormSubmit}
           >
             {({
@@ -78,6 +100,14 @@ const onboarding = () => {
             }) => (
               <form onSubmit={handleSubmit}>
                 <InputGroup
+                  label="Tell us a little bit about yourself"
+                  name="bio"
+                  id="bio"
+                  placeholder="Run of the mill vagabond"
+                  value={values.bio}
+                  onChange={handleChange}
+                />
+                <InputGroup
                   label="Where do you live?"
                   name="location"
                   id="location"
@@ -87,19 +117,19 @@ const onboarding = () => {
                 />
                 <InputGroup
                   label="Where have you been?"
-                  name="email"
-                  id="email"
+                  name="places_visited"
+                  id="places_visited"
                   placeholder="Seattle, Buenos Aires, Madrid"
-                  value={values.email}
+                  value={values.places_visited}
                   onChange={handleChange}
                   isTextArea={true}
                 />
                 <InputGroup
                   label="Where do you want to go next?"
-                  name="password"
-                  id="password"
+                  name="bucket_list"
+                  id="bucket_list"
                   placeholder="Paris, Tokyo, Mumbai"
-                  value={values.password}
+                  value={values.bucket_list}
                   onChange={handleChange}
                   isTextArea={true}
                 />

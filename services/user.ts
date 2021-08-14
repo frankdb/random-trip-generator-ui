@@ -17,9 +17,18 @@ export const getUsers = async () => {
 
 export const getProfile = async () => {
   try {
-    const result = await axios.put("http://localhost:3000/api/profile/");
-    console.log("IN GET PROFILE====", result);
-    return result;
+    const result = await axios.get("http://localhost:3000/api/profile/");
+    return result.data;
+  } catch (err) {
+    console.log("ERRORING OUT");
+    console.error(err);
+  }
+};
+
+export const updateProfile = async (obj) => {
+  try {
+    const result = await axios.put("http://localhost:3000/api/profile/", obj);
+    return result.data;
   } catch (err) {
     console.log("ERRORING OUT");
     console.error(err);
