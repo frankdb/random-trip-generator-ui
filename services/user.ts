@@ -14,3 +14,14 @@ export const getUsers = async () => {
     console.error(err);
   }
 };
+
+export const getProfile = async () => {
+  try {
+    const result = await axios.put("http://localhost:3000/api/profile/");
+    console.log("IN GET PROFILE====", result);
+    return result;
+  } catch (err) {
+    console.log("ERRORING OUT");
+    console.error(err);
+  }
+};

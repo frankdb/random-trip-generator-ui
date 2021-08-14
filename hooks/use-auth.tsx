@@ -36,6 +36,7 @@ function useProvideAuth() {
         const token = res.data.token;
         setUser({ ...user, isLoading: false, token, isAuthenticated: true });
         localStorage.setItem("token", token);
+        setAuthToken(token);
         return res;
       })
       .catch((err) => {
@@ -55,6 +56,7 @@ function useProvideAuth() {
         const token = res.data.token;
         setUser({ ...user, isLoading: false, token, isAuthenticated: false });
         localStorage.setItem("token", token);
+        setAuthToken(token);
         return res;
       })
       .catch((err) => {
