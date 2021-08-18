@@ -28,8 +28,14 @@ export const getProfile = async () => {
 
 export const updateProfile = async (obj) => {
   try {
+    // const result = await axios.put("http://localhost:3000/api/profile/", obj, {
+    //   withCredentials: true,
+    // });
     const result = await axios.put("http://localhost:3000/api/profile/", obj, {
       withCredentials: true,
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     return result.data;
   } catch (err) {

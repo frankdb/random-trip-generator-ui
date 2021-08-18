@@ -71,13 +71,16 @@ function useProvideAuth() {
   const signout = () => {
     localStorage.removeItem("token");
     setUser({ ...user, isLoading: false, token: null });
-    return "Signed out";
-    // return firebase
-    //   .auth()
-    //   .signOut()
-    //   .then(() => {
-    //     setUser(false);
-    //   });
+    // return "Signed out";
+    return axios
+      .get("http://localhost:3000/api/user/logout")
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        return null;
+      });
   };
   const sendPasswordResetEmail = (email) => {
     return null;

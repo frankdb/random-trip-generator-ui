@@ -7,6 +7,7 @@ import InputGroup from "../components/application-ui/forms/InputGroup";
 import Button from "../components/application-ui/elements/Button";
 import { useRequireAuth } from "../hooks/use-require-auth";
 import { getProfile, getUsers, updateProfile } from "../services/user";
+import { useRouter } from "next/router";
 
 const steps = {
   name: {
@@ -35,6 +36,7 @@ const onboarding = () => {
   const auth = useRequireAuth();
   const { data, isError, isLoading } = useQuery("users", getUsers);
   let profile;
+  const router = useRouter();
 
   useEffect(() => {
     console.log("USERS=====", data, isError, isLoading);
@@ -71,6 +73,8 @@ const onboarding = () => {
       };
 
       updateProfile(obj);
+
+      router.push("/dashboard");
     } catch (err) {
       console.log(err);
     }
