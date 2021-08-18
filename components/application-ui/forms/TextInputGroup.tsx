@@ -1,7 +1,7 @@
 import React from "react";
 import { ExclamationCircleIcon } from "@heroicons/react/solid";
 
-interface InputGroupProps {
+interface TextInputGroupProps {
   label?: string;
   name: string;
   type?: "text" | "email" | "password";
@@ -15,7 +15,7 @@ interface InputGroupProps {
   isTextArea?: boolean;
 }
 
-const InputGroup = ({
+const TextInputGroup = ({
   label,
   type = "text",
   name,
@@ -27,7 +27,7 @@ const InputGroup = ({
   throwError,
   errorMessage = "Required",
   isTextArea = false,
-}: InputGroupProps) => {
+}: TextInputGroupProps) => {
   const classes = throwError
     ? "border-red-300 focus:ring-red-500 focus:border-red-500 text-red-900 placeholder-red-300 border-red-300 pr-10"
     : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm";
@@ -85,4 +85,4 @@ const InputGroup = ({
   );
 };
 
-export default InputGroup;
+export default TextInputGroup;

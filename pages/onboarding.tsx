@@ -3,43 +3,18 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import Layout from "../components/application-ui/layout/Layout";
 import ContentLayout from "../components/application-ui/layout/ContentLayout";
-import InputGroup from "../components/application-ui/forms/InputGroup";
+import TextInputGroup from "../components/application-ui/forms/TextInputGroup";
 import Button from "../components/application-ui/elements/Button";
 import { useRequireAuth } from "../hooks/use-require-auth";
-import { getProfile, getUsers, updateProfile } from "../services/user";
+import { getProfile, updateProfile } from "../services/user";
 import { useRouter } from "next/router";
-
-const steps = {
-  name: {
-    question: "What's your name?",
-    type: "textInput",
-  },
-  location: {
-    question: "Where do you live?",
-    type: "textInput",
-    options: [
-      { text: "usa", value: 1 },
-      { text: "outside the us", value: 2 },
-    ],
-  },
-  placesVisited: {
-    question: "Where have you been?",
-    type: "textInput",
-  },
-  bucketList: {
-    question: "What's on your bucket list?",
-    type: "textInput",
-  },
-};
 
 const onboarding = () => {
   const auth = useRequireAuth();
-  const { data, isError, isLoading } = useQuery("users", getUsers);
-  let profile;
   const router = useRouter();
+  let profile;
 
   useEffect(() => {
-    console.log("USERS=====", data, isError, isLoading);
     getProfile()
       .then((res) => {
         profile = res;
@@ -48,7 +23,7 @@ const onboarding = () => {
       .catch((err) => {
         console.error(err);
       });
-  }, [data]);
+  }, []);
 
   const handleFormSubmit = async ({
     bio,
@@ -57,10 +32,6 @@ const onboarding = () => {
     bucket_list,
   }) => {
     try {
-      // const res = await auth.signup(name, email, password);
-      // if (res) {
-      //   router.push("/onboarding");
-      // }
       console.log(bio, location, places_visited, bucket_list);
 
       const obj = {
@@ -103,7 +74,7 @@ const onboarding = () => {
               isSubmitting,
             }) => (
               <form onSubmit={handleSubmit}>
-                <InputGroup
+                <TextInputGroup
                   label="Tell us a little bit about yourself"
                   name="bio"
                   id="bio"
@@ -111,7 +82,7 @@ const onboarding = () => {
                   value={values.bio}
                   onChange={handleChange}
                 />
-                <InputGroup
+                <TextInputGroup
                   label="Where do you live?"
                   name="location"
                   id="location"
@@ -119,7 +90,7 @@ const onboarding = () => {
                   value={values.location}
                   onChange={handleChange}
                 />
-                <InputGroup
+                <TextInputGroup
                   label="Where have you been?"
                   name="places_visited"
                   id="places_visited"
@@ -128,7 +99,7 @@ const onboarding = () => {
                   onChange={handleChange}
                   isTextArea={true}
                 />
-                <InputGroup
+                <TextInputGroup
                   label="Where do you want to go next?"
                   name="bucket_list"
                   id="bucket_list"
@@ -153,6 +124,7 @@ const onboarding = () => {
                   float="right"
                   paddingX={8}
                   isLoading={isSubmitting}
+                  handleClick={() => router.push("/dashboard")}
                 />
               </form>
             )}

@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../components/application-ui/layout/Layout";
-import ContainerLayout from "../components/application-ui/layout/ContentLayout";
-import Login from "../components/forms/Login";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useAuth } from "../hooks/use-auth";
 import { useRouter } from "next/router";
+import { Formik } from "formik";
+import * as Yup from "yup";
 
-interface LoginFormData {
-  email: string;
-  password: string;
-}
+import Layout from "../components/application-ui/layout/Layout";
+import ContainerLayout from "../components/application-ui/layout/ContentLayout";
+import TextInputGroup from "../components/application-ui/forms/TextInputGroup";
+import Button from "../components/application-ui/elements/Button";
+
+const LoginSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  password: Yup.string().min(8, "Minimum of 8 characters").required("Required"),
+});
 
 const signup = () => {
   const auth = useAuth();
@@ -19,24 +23,14 @@ const signup = () => {
     console.log("Auth===", auth);
   }, [auth]);
 
-  const [formData, setFormData] = useState<LoginFormData>({
-    email: "",
-    password: "",
-  });
-
-  const { email, password } = formData;
-
-  const handleFormData = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log("formData", formData);
-    const res = await auth.login(email, password);
-    console.log("RES======", res);
-    if (res) {
-      router.push("/onboarding");
+  const handleFormSubmit = async ({ email, password }) => {
+    try {
+      const res = await auth.login(email, password);
+      if (res) {
+        router.push("/dashboard");
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -52,11 +46,54 @@ const signup = () => {
             </span>
           </p>
         </div>
-        <Login
-          formData={formData}
-          handleFormData={handleFormData}
-          handleSubmit={handleSubmit}
-        />
+        <div className="flex flex-col max-w-md p-4 mx-auto bg-white rounded-md shadow-sm sm:p-8">
+          <Formik
+            initialValues={{ email: "", password: "" }}
+            validationSchema={LoginSchema}
+            onSubmit={handleFormSubmit}
+          >
+            {({
+              values,
+              errors,
+              touched,
+              handleChange,
+              handleSubmit,
+              isSubmitting,
+            }) => (
+              <form onSubmit={handleSubmit}>
+                <TextInputGroup
+                  label="Email"
+                  name="email"
+                  id="email"
+                  type="text"
+                  placeholder="homersimpson@aol.com"
+                  value={values.email}
+                  onChange={handleChange}
+                  throwError={errors.email && touched.email}
+                  errorMessage={errors.email}
+                />
+                <TextInputGroup
+                  label="Password"
+                  name="password"
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  value={values.password}
+                  onChange={handleChange}
+                  throwError={errors.password && touched.password}
+                  errorMessage={errors.password}
+                />
+                <Button
+                  type="submit"
+                  label="Log In"
+                  isFullWidth={true}
+                  colorScheme="blue"
+                  isLoading={isSubmitting}
+                />
+              </form>
+            )}
+          </Formik>
+        </div>
       </ContainerLayout>
     </Layout>
   );

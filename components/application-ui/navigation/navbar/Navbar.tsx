@@ -54,7 +54,7 @@ const Navbar = () => {
               <Link href="/login">Log In</Link>
             </div>
             <div className="px-3 cursor-pointer">
-              <Link href="/signupalt">Sign Up</Link>
+              <Link href="/signup">Sign Up</Link>
             </div>
           </div>
         )}
