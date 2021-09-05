@@ -1,33 +1,43 @@
-import React, { useEffect } from "react";
-import Layout from "../components/application-ui/layout/Layout";
-import ContainerLayout from "../components/application-ui/layout/ContentLayout";
-import Link from "next/link";
-import { useAuth } from "../hooks/use-auth";
-import { useRouter } from "next/router";
-import TextInputGroup from "../components/application-ui/forms/TextInputGroup";
-import Button from "../components/application-ui/elements/Button";
-import { Formik } from "formik";
-import * as Yup from "yup";
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { useAuth } from '../hooks/use-auth';
+import TextInputGroup from '../components/application-ui/forms/TextInputGroup';
+import Button from '../components/application-ui/elements/Button';
+import Layout from '../components/application-ui/layout/Layout';
+import ContainerLayout from '../components/application-ui/layout/ContentLayout';
+
+interface ISignupFormProps {
+  name: string;
+  email: string;
+  password: string;
+}
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(8, "Minimum of 8 characters").required("Required"),
+  name: Yup.string().required('Required'),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(8, 'Minimum of 8 characters').required('Required'),
 });
 
-const signupalt = () => {
+function Signup() {
   const auth = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Auth===", auth);
+    console.log('Auth===', auth);
   }, [auth]);
 
-  const handleFormSubmit = async ({ name, email, password }) => {
+  const handleFormSubmit = async ({
+    name,
+    email,
+    password,
+  }: ISignupFormProps) => {
     try {
       const res = await auth.signup(name, email, password);
       if (res) {
-        router.push("/onboarding");
+        router.push('/onboarding');
       }
     } catch (err) {
       console.log(err);
@@ -40,7 +50,7 @@ const signupalt = () => {
         <div className="p-4 text-center">
           <h2 className="text-2xl font-bold">Sign up</h2>
           <p>
-            Already have an account?{" "}
+            Already have an account?{' '}
             <span className="pointer">
               <Link href="/login">Log in</Link>
             </span>
@@ -48,7 +58,7 @@ const signupalt = () => {
         </div>
         <div className="flex flex-col max-w-md p-4 mx-auto bg-white rounded-md shadow-sm sm:p-8">
           <Formik
-            initialValues={{ name: "", email: "", password: "" }}
+            initialValues={{ name: '', email: '', password: '' }}
             validationSchema={SignupSchema}
             onSubmit={handleFormSubmit}
           >
@@ -96,7 +106,7 @@ const signupalt = () => {
                 <Button
                   type="submit"
                   label="Get Started"
-                  isFullWidth={true}
+                  isFullWidth
                   colorScheme="blue"
                   isLoading={isSubmitting}
                 />
@@ -107,6 +117,6 @@ const signupalt = () => {
       </ContainerLayout>
     </Layout>
   );
-};
+}
 
-export default signupalt;
+export default Signup;

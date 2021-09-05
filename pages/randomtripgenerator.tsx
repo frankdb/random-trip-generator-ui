@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import Layout from "../components/application-ui/layout/Layout";
-import { IconContext } from "react-icons";
-import { FaGlobeAmericas } from "react-icons/fa";
+import React, { useState } from 'react';
+import { IconContext } from 'react-icons';
+import { FaGlobeAmericas } from 'react-icons/fa';
+import Layout from '../components/application-ui/layout/Layout';
 
-const randomtripgenerator = () => {
+function Randomtripgenerator() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleTakeTrip = () => {
-    console.log("isLoading");
+    console.log('isLoading');
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
@@ -33,24 +33,25 @@ const randomtripgenerator = () => {
         </div>
         <div className="flex justify-center my-4">
           <button
+            type="button"
             className="flex items-center justify-center w-56 h-16 px-8 py-4 mx-2 font-bold text-white bg-green-500 border-none rounded-md shadow-sm focus:outline-none "
             onClick={() => handleTakeTrip()}
           >
             <div>
-              <IconContext.Provider value={{ size: "2em", color: "white" }}>
+              <IconContext.Provider value={{ size: '2em', color: 'white' }}>
                 <div>
                   <FaGlobeAmericas
-                    className={isLoading ? "animate-spin" : "hidden"}
+                    className={isLoading ? 'animate-spin' : 'hidden'}
                   />
                 </div>
               </IconContext.Provider>
             </div>
-            <div className={!isLoading ? "" : "hidden"}>Find a Destination</div>
+            <div className={!isLoading ? '' : 'hidden'}>Find a Destination</div>
           </button>
         </div>
       </Layout>
     </div>
   );
-};
+}
 
-export default randomtripgenerator;
+export default Randomtripgenerator;

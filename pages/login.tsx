@@ -1,33 +1,37 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { useAuth } from "../hooks/use-auth";
-import { useRouter } from "next/router";
-import { Formik } from "formik";
-import * as Yup from "yup";
+import React, { useEffect } from 'react';
+import Link from 'next/link';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { useRouter } from 'next/router';
+import { useAuth } from '../hooks/use-auth';
+import Layout from '../components/application-ui/layout/Layout';
+import ContainerLayout from '../components/application-ui/layout/ContentLayout';
+import TextInputGroup from '../components/application-ui/forms/TextInputGroup';
+import Button from '../components/application-ui/elements/Button';
 
-import Layout from "../components/application-ui/layout/Layout";
-import ContainerLayout from "../components/application-ui/layout/ContentLayout";
-import TextInputGroup from "../components/application-ui/forms/TextInputGroup";
-import Button from "../components/application-ui/elements/Button";
+interface ILoginFormProps {
+  email: string;
+  password: string;
+}
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string().min(8, "Minimum of 8 characters").required("Required"),
+  email: Yup.string().email('Invalid email').required('Required'),
+  password: Yup.string().min(8, 'Minimum of 8 characters').required('Required'),
 });
 
-const signup = () => {
+const Login = () => {
   const auth = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    console.log("Auth===", auth);
+    console.log('Auth===', auth);
   }, [auth]);
 
-  const handleFormSubmit = async ({ email, password }) => {
+  const handleFormSubmit = async ({ email, password }: ILoginFormProps) => {
     try {
       const res = await auth.login(email, password);
       if (res) {
-        router.push("/dashboard");
+        router.push('/dashboard');
       }
     } catch (err) {
       console.log(err);
@@ -40,7 +44,7 @@ const signup = () => {
         <div className="p-4 text-center">
           <h2 className="text-2xl font-bold">Login</h2>
           <p>
-            Don't have an account?{" "}
+            Don't have an account?{' '}
             <span className="pointer">
               <Link href="/signup">Sign Up</Link>
             </span>
@@ -48,7 +52,7 @@ const signup = () => {
         </div>
         <div className="flex flex-col max-w-md p-4 mx-auto bg-white rounded-md shadow-sm sm:p-8">
           <Formik
-            initialValues={{ email: "", password: "" }}
+            initialValues={{ email: '', password: '' }}
             validationSchema={LoginSchema}
             onSubmit={handleFormSubmit}
           >
@@ -86,7 +90,7 @@ const signup = () => {
                 <Button
                   type="submit"
                   label="Log In"
-                  isFullWidth={true}
+                  isFullWidth
                   colorScheme="blue"
                   isLoading={isSubmitting}
                 />
@@ -99,4 +103,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Login;

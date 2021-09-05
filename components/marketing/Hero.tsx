@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import React from "react";
-import Button from "../application-ui/elements/Button";
+import React from 'react';
+import { useRouter } from 'next/router';
+import Button from '../application-ui/elements/Button';
 
-interface HeroProps {
+interface IHeroProps {
   backgroundColor: string;
   header: string;
   subheader: string;
@@ -11,14 +11,14 @@ interface HeroProps {
   ctaButtonLink?: string;
 }
 
-const Hero = ({
+function Hero({
   backgroundColor,
   header,
   subheader,
-  fontColor = "text-black-400",
+  fontColor = 'text-black-400',
   showCTAButton = true,
-  ctaButtonLink = "/signup",
-}: HeroProps) => {
+  ctaButtonLink = '/signup',
+}: IHeroProps) {
   const router = useRouter();
 
   const handleCTAButtonClick = () => {
@@ -46,6 +46,6 @@ const Hero = ({
       ) : null}
     </div>
   );
-};
+}
 
 export default Hero;

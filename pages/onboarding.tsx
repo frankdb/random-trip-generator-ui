@@ -1,16 +1,20 @@
-import { Formik } from "formik";
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import Layout from "../components/application-ui/layout/Layout";
-import ContentLayout from "../components/application-ui/layout/ContentLayout";
-import TextInputGroup from "../components/application-ui/forms/TextInputGroup";
-import Button from "../components/application-ui/elements/Button";
-import { useRequireAuth } from "../hooks/use-require-auth";
-import { getProfile, updateProfile } from "../services/user";
-import { useRouter } from "next/router";
+import React, { useEffect } from 'react';
+import { Formik } from 'formik';
+import { useRouter } from 'next/router';
+import Layout from '../components/application-ui/layout/Layout';
+import ContentLayout from '../components/application-ui/layout/ContentLayout';
+import TextInputGroup from '../components/application-ui/forms/TextInputGroup';
+import Button from '../components/application-ui/elements/Button';
+import { getProfile, updateProfile } from '../services/user';
 
-const onboarding = () => {
-  const auth = useRequireAuth();
+interface IOnboardingFormProps {
+  bio: string;
+  location: string;
+  placesVisited: string;
+  bucketList: string;
+}
+
+function Onboarding() {
   const router = useRouter();
   let profile;
 
@@ -18,7 +22,7 @@ const onboarding = () => {
     getProfile()
       .then((res) => {
         profile = res;
-        console.log("PROFILE====", profile);
+        console.log('PROFILE====', profile);
       })
       .catch((err) => {
         console.error(err);
@@ -28,24 +32,24 @@ const onboarding = () => {
   const handleFormSubmit = async ({
     bio,
     location,
-    places_visited,
-    bucket_list,
-  }) => {
+    placesVisited,
+    bucketList,
+  }: IOnboardingFormProps) => {
     try {
-      console.log(bio, location, places_visited, bucket_list);
+      console.log(bio, location, placesVisited, bucketList);
 
       const obj = {
         profile: {
           bio,
           location,
-          places_visited,
-          bucket_list,
+          placesVisited,
+          bucketList,
         },
       };
 
       updateProfile(obj);
 
-      router.push("/dashboard");
+      // router.push("/dashboard");
     } catch (err) {
       console.log(err);
     }
@@ -57,22 +61,14 @@ const onboarding = () => {
         <div className="w-3/4 mx-auto">
           <Formik
             initialValues={{
-              bio: "",
-              location: "",
-              places_visited: "",
-              bucket_list: "",
+              bio: '',
+              location: '',
+              placesVisited: '',
+              bucketList: '',
             }}
             onSubmit={handleFormSubmit}
           >
-            {({
-              values,
-              errors,
-              touched,
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              isSubmitting,
-            }) => (
+            {({ values, handleChange, handleSubmit, isSubmitting }) => (
               <form onSubmit={handleSubmit}>
                 <TextInputGroup
                   label="Tell us a little bit about yourself"
@@ -95,18 +91,18 @@ const onboarding = () => {
                   name="places_visited"
                   id="places_visited"
                   placeholder="Seattle, Buenos Aires, Madrid"
-                  value={values.places_visited}
+                  value={values.placesVisited}
                   onChange={handleChange}
-                  isTextArea={true}
+                  isTextArea
                 />
                 <TextInputGroup
                   label="Where do you want to go next?"
                   name="bucket_list"
                   id="bucket_list"
                   placeholder="Paris, Tokyo, Mumbai"
-                  value={values.bucket_list}
+                  value={values.bucketList}
                   onChange={handleChange}
-                  isTextArea={true}
+                  isTextArea
                 />
                 <Button
                   type="submit"
@@ -124,7 +120,7 @@ const onboarding = () => {
                   float="right"
                   paddingX={8}
                   isLoading={isSubmitting}
-                  handleClick={() => router.push("/dashboard")}
+                  handleClick={() => router.push('/dashboard')}
                 />
               </form>
             )}
@@ -133,6 +129,6 @@ const onboarding = () => {
       </ContentLayout>
     </Layout>
   );
-};
+}
 
-export default onboarding;
+export default Onboarding;

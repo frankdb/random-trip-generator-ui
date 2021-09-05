@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-const ContentLayout = ({ children }) => {
+function ContentLayout({ children }: { children: any }) {
   return <div className="container p-4 mx-auto sm:p-16">{children}</div>;
-};
+}
 
 export default ContentLayout;

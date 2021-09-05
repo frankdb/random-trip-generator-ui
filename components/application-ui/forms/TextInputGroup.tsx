@@ -1,10 +1,10 @@
-import React from "react";
-import { ExclamationCircleIcon } from "@heroicons/react/solid";
+import React from 'react';
+import { ExclamationCircleIcon } from '@heroicons/react/solid';
 
-interface TextInputGroupProps {
+interface ITextInputGroupProps {
   label?: string;
   name: string;
-  type?: "text" | "email" | "password";
+  type?: 'text' | 'email' | 'password';
   id: string;
   value?: string;
   onChange?: any;
@@ -15,9 +15,9 @@ interface TextInputGroupProps {
   isTextArea?: boolean;
 }
 
-const TextInputGroup = ({
+function TextInputGroup({
   label,
-  type = "text",
+  type = 'text',
   name,
   id,
   placeholder,
@@ -25,12 +25,12 @@ const TextInputGroup = ({
   onChange,
   onBlur,
   throwError,
-  errorMessage = "Required",
+  errorMessage = 'Required',
   isTextArea = false,
-}: TextInputGroupProps) => {
+}: ITextInputGroupProps) {
   const classes = throwError
-    ? "border-red-300 focus:ring-red-500 focus:border-red-500 text-red-900 placeholder-red-300 border-red-300 pr-10"
-    : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm";
+    ? 'border-red-300 focus:ring-red-500 focus:border-red-500 text-red-900 placeholder-red-300 border-red-300 pr-10'
+    : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm';
 
   return (
     <div className="my-4">
@@ -83,6 +83,6 @@ const TextInputGroup = ({
       ) : null}
     </div>
   );
-};
+}
 
 export default TextInputGroup;

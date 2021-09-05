@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
-import axios from "axios";
-import setAuthToken from "../utilities/setAuthToken";
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import axios from 'axios';
+import setAuthToken from '../utilities/setAuthToken';
 
 const authContext = createContext(null);
 
@@ -23,7 +23,7 @@ function useProvideAuth() {
   const signup = (name, email, password) => {
     return axios
       .post(
-        "http://localhost:3000/api/user/signup",
+        'http://localhost:3000/api/user/signup',
         {
           name,
           email,
@@ -35,7 +35,7 @@ function useProvideAuth() {
         console.log(res);
         const token = res.data.token;
         setUser({ ...user, isLoading: false, token, isAuthenticated: true });
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         setAuthToken(token);
         return res;
       })
@@ -48,7 +48,7 @@ function useProvideAuth() {
   const login = (email, password) => {
     return axios
       .post(
-        "http://localhost:3000/api/user/login",
+        'http://localhost:3000/api/user/login',
         {
           email,
           password,
@@ -59,7 +59,7 @@ function useProvideAuth() {
         console.log(res);
         const token = res.data.token;
         setUser({ ...user, isLoading: false, token, isAuthenticated: false });
-        localStorage.setItem("token", token);
+        localStorage.setItem('token', token);
         setAuthToken(token);
         return res;
       })
@@ -69,11 +69,11 @@ function useProvideAuth() {
       });
   };
   const signout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem('token');
     setUser({ ...user, isLoading: false, token: null });
     // return "Signed out";
     return axios
-      .get("http://localhost:3000/api/user/logout")
+      .get('http://localhost:3000/api/user/logout')
       .then((res) => {
         console.log(res);
       })
@@ -105,7 +105,7 @@ function useProvideAuth() {
   // ... component that utilizes this hook to re-render with the ...
   // ... latest auth object.
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
 
     if (token) {
       setUser({ ...user, isLoading: false, token, isAuthenticated: true });

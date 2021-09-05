@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
-import { FiMenu } from "react-icons/fi";
-import { IconContext } from "react-icons";
-import Dropdown from "./Dropdown";
-import { useAuth } from "../../../../hooks/use-auth";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { FiMenu } from 'react-icons/fi';
+import { IconContext } from 'react-icons';
+import Dropdown from './Dropdown';
+import { useAuth } from '../../../../hooks/use-auth';
 
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -20,12 +20,12 @@ const Navbar = () => {
 
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
-    console.log("showDropdown value:", showDropdown);
+    console.log('showDropdown value:', showDropdown);
   };
 
   const handleSignout = () => {
     auth.signout();
-    router.push("/signup");
+    router.push('/signup');
   };
 
   return (
@@ -62,7 +62,7 @@ const Navbar = () => {
           className="flex sm:hidden pointer"
           onClick={() => toggleDropdown()}
         >
-          <IconContext.Provider value={{ size: "1.5em" }}>
+          <IconContext.Provider value={{ size: '1.5em' }}>
             <FiMenu />
           </IconContext.Provider>
         </div>

@@ -1,7 +1,12 @@
-import Link from "next/link";
-import React from "react";
+import React from 'react';
+import Link from 'next/link';
 
-const Dropdown = ({ isLoggedIn, handleSignout }) => {
+interface IDropdownProps {
+  isLoggedIn: boolean;
+  handleSignout: any;
+}
+
+function Dropdown({ isLoggedIn, handleSignout }: IDropdownProps) {
   return (
     <div className="absolute flex flex-col w-40 font-medium text-gray-800 bg-white bg-blue-200 rounded-md sm:hidden right-5 top-14">
       {isLoggedIn ? (
@@ -28,6 +33,6 @@ const Dropdown = ({ isLoggedIn, handleSignout }) => {
       )}
     </div>
   );
-};
+}
 
 export default Dropdown;
